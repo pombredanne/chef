@@ -580,3 +580,17 @@ steps:
       linux:
         privileged: true
         single-use: true
+
+#########################################################################
+  # Verify - Habitat Plans
+#########################################################################
+
+- label: "Windows plan"
+  commands:
+    - scripts/bk_tests/verify_win_plan.ps1
+  expeditor:
+    executor:
+      windows:
+        privileged: true
+        single-use: true
+        shell: ["powershell", "-Command"]
