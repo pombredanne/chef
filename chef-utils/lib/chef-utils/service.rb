@@ -26,23 +26,23 @@ module ChefUtils
     include TrainHelpers
     extend self
 
-    def debianrcd?(node = __getnode)
+    def debianrcd?
       file_exist?("/usr/sbin/update-rc.d")
     end
 
-    def invokercd?(node = __getnode)
+    def invokercd?
       file_exist?("/usr/sbin/invoke-rc.d")
     end
 
-    def upstart?(node = __getnode)
+    def upstart?
       file_exist?("/sbin/initctl")
     end
 
-    def insserv?(node = __getnode)
+    def insserv?
       file_exist?("/sbin/insserv")
     end
 
-    def redhatrcd?(node = __getnode)
+    def redhatrcd?
       file_exist?("/sbin/chkconfig")
     end
 
