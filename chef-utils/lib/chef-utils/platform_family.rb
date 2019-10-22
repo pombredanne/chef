@@ -187,10 +187,27 @@ module ChefUtils
     #
     # @return [Boolean]
     #
-    def windows?(node = __getnode)
-      # we prefer to use the node object so that chef-sugar can stub the node data with fauxhai, but
-      # for contexts where there is no node (e.g. class parsing time) we use RUBY_PLATFORM.
-      node ? node["platform_family"] == "windows" : RUBY_PLATFORM =~ /mswin|mingw32|windows/
+    def windows?(node = __getnode(true))
+      # This is all somewhat complicated.  We prefer to get the node object so that chefspec can
+      # stub the node object.  But we also have to deal with class-parsing time where there is
+      # no node object, so we have to fall back to RUBY_PLATFORM based detection.  We cannot pull
+      # the node object out of the Chef.run_context.node global object here (which is what the
+      # false flag to __getnode is about) because some run-time code also cannot run under chefspec
+      # on non-windows where the node is stubbed to windows.
+      #
+      # As a result of this the `windows?` helper and the `ChefUtils.windows?` helper do not behave
+      # the same way in that the latter is not stubbable by chefspec.
+      #
+      node ? node["platform_family"] == "windows" : windows_ruby_platform?
+    end
+
+    # Determine if the ruby VM is currently running on a windows node (chefspec can never stub
+    # this behavior, so this is useful for code which can never be parsed on a non-windows box).
+    #
+    # @return [Boolean]
+    #
+    def windows_ruby_platform?
+      RUBY_PLATFORM =~ /mswin|mingw32|windows/
     end
 
     #

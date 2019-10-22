@@ -34,10 +34,14 @@ module ChefUtils
     private
 
     # @api private
-    def __getnode
+    def __getnode(skip_global = false)
       return node if respond_to?(:node) && node
 
       return run_context&.node if respond_to?(:run_context) && run_context&.node
+
+      unless skip_global
+        return Chef.run_context&.node if defined?(Chef) && Chef.respond_to?(:run_context) && Chef.run_context&.node
+      end
 
       nil
     end
