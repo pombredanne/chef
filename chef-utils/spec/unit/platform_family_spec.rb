@@ -4,12 +4,20 @@ require "fauxhai"
 def reports_true_for(*args)
   args.each do |method|
     it "reports true for #{method}" do
-      expect(described_class.send(method, node)).to be true
+      if PLATFORM_FAMILY_HELPERS_WITHOUT_NODE.include?(method)
+        expect(described_class.send(method)).to be true
+      else
+        expect(described_class.send(method, node)).to be true
+      end
     end
   end
   (PLATFORM_FAMILY_HELPERS - args).each do |method|
     it "reports false for #{method}" do
-      expect(described_class.send(method, node)).to be false
+      if PLATFORM_FAMILY_HELPERS_WITHOUT_NODE.include?(method)
+        expect(described_class.send(method)).to be false
+      else
+        expect(described_class.send(method, node)).to be false
+      end
     end
   end
 end
@@ -18,6 +26,8 @@ RSpec.describe ChefUtils::PlatformFamily do
   let(:node) { Fauxhai.mock(options).data }
 
   PLATFORM_FAMILY_HELPERS = (described_class.methods - Module.methods).freeze
+
+  PLATFORM_FAMILY_HELPERS_WITHOUT_NODE = [ :windows_ruby_platform? ].freeze
 
   ( HELPER_MODULES - [ described_class ] ).each do |klass|
     it "does not have methods that collide with #{klass}" do
