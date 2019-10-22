@@ -170,6 +170,10 @@ RSpec.describe ChefUtils::PlatformFamily do
   context "on windows" do
     let(:options) { { platform: "windows" } }
 
-    reports_true_for(:windows?)
+    if RUBY_PLATFORM =~ /mswin|mingw32|windows/
+      reports_true_for(:windows?, :ruby_windows_platform?)
+    else
+      reports_true_for(:windows?)
+    end
   end
 end
