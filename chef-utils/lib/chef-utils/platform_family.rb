@@ -20,7 +20,6 @@ require "chef-utils/internal"
 module ChefUtils
   module PlatformFamily
     include Internal
-    extend self
 
     # Determine if the current node is arch linux.
     #
@@ -275,5 +274,7 @@ module ChefUtils
       # we could use os, platform_family or platform here equally
       %w{netbsd freebsd openbsd dragonflybsd}.include?(node["platform"])
     end
+
+    extend self
   end
 end

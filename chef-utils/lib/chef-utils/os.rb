@@ -20,7 +20,6 @@ require "chef-utils/internal"
 module ChefUtils
   module OS
     include Internal
-    extend self
 
     #
     # NOTE CAREFULLY: Most node['os'] values should not appear in this file at all.
@@ -48,5 +47,7 @@ module ChefUtils
     def darwin?(node = __getnode)
       node["os"] == "darwin"
     end
+
+    extend self
   end
 end

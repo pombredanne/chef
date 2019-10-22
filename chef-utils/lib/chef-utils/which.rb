@@ -20,7 +20,6 @@ require "chef-utils/internal"
 module ChefUtils
   module Which
     include Internal
-    extend self
 
     def which(*cmds, extra_path: nil, &block)
       where(*cmds, extra_path: extra_path, &block).first || false
@@ -57,5 +56,7 @@ module ChefUtils
 
       block ? yield(filename) : true
     end
+
+    extend self
   end
 end

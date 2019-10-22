@@ -62,5 +62,6 @@ module ChefUtils
       nil
     end
 
+    extend self
   end
 end

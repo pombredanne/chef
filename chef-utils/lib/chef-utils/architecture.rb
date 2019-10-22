@@ -20,7 +20,6 @@ require "chef-utils/internal"
 module ChefUtils
   module Architecture
     include Internal
-    extend self
 
     # Determine if the current architecture is 64-bit
     #
@@ -111,5 +110,6 @@ module ChefUtils
       %w{s390}.include?(node["kernel"]["machine"])
     end
 
+    extend self
   end
 end

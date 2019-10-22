@@ -63,21 +63,21 @@ module ChefUtils
       ENV.key?("CI")
     end
 
-    class << self
-      def has_systemd_service_unit?(svc_name)
-        %w{ /etc /usr/lib /lib /run }.any? do |load_path|
-          file_exist?(
-            "#{load_path}/systemd/system/#{svc_name.gsub(/@.*$/, "@")}.service"
-          )
-        end
-      end
-
-      def has_systemd_unit?(svc_name)
-        # TODO: stop supporting non-service units with service resource
-        %w{ /etc /usr/lib /lib /run }.any? do |load_path|
-          file_exist?("#{load_path}/systemd/system/#{svc_name}")
-        end
+    def has_systemd_service_unit?(svc_name)
+      %w{ /etc /usr/lib /lib /run }.any? do |load_path|
+        file_exist?(
+          "#{load_path}/systemd/system/#{svc_name.gsub(/@.*$/, "@")}.service"
+        )
       end
     end
+
+    def has_systemd_unit?(svc_name)
+      # TODO: stop supporting non-service units with service resource
+      %w{ /etc /usr/lib /lib /run }.any? do |load_path|
+        file_exist?("#{load_path}/systemd/system/#{svc_name}")
+      end
+    end
+
+    extend self
   end
 end

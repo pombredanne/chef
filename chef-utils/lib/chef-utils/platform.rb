@@ -20,7 +20,6 @@ require "chef-utils/internal"
 module ChefUtils
   module Platform
     include Internal
-    extend self
 
     #
     # NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
@@ -341,5 +340,6 @@ module ChefUtils
     end
 
     # FIXME FIXME FIXME: all the rest of the platforms
+    extend self
   end
 end

@@ -21,7 +21,6 @@ require "chef-utils/platform_family"
 module ChefUtils
   module PathSanity
     include Internal
-    extend self
 
     def sanitized_path(env = nil)
       env_path = env ? env["PATH"] : __env_path
@@ -51,5 +50,7 @@ module ChefUtils
         Gem.bindir
       end
     end
+
+    extend self
   end
 end

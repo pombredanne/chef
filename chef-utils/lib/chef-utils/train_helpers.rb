@@ -55,5 +55,7 @@ module ChefUtils
         File.open(*args, &block)
       end
     end
+
+    extend self
   end
 end

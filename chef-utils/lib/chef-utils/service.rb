@@ -24,7 +24,6 @@ module ChefUtils
   module Service
     include Internal
     include TrainHelpers
-    extend self
 
     def debianrcd?
       file_exist?("/usr/sbin/update-rc.d")
@@ -64,5 +63,7 @@ module ChefUtils
         raise ArgumentError, "type of service must be one of :initd, :upstart, :xinetd, :etc_rcd, or :systemd"
       end
     end
+
+    extend self
   end
 end
